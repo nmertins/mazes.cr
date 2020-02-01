@@ -32,5 +32,14 @@ module Mazes
     def linked?(cell)
       @links.has_key?(cell)
     end
+
+    def neighbors
+      neighbors = [] of Cell
+      neighbors << north if north
+      neighbors << south if south
+      neighbors << east if east
+      neighbors << west if west
+      neighbors
+    end
   end
 end
