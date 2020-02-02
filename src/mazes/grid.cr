@@ -50,5 +50,15 @@ module Mazes
         end
       end
     end
+
+    def random_cell
+      row = rand(@rows)
+      column = rand(@columns)
+      self[row, column]
+    end
+
+    def size
+      @rows * @columns
+    end
   end
 end
