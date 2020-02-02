@@ -2,10 +2,10 @@ module Mazes
   class Cell
     property row
     property column
-    property north
-    property south
-    property east
-    property west
+    property north : Cell?
+    property south : Cell?
+    property east : Cell?
+    property west : Cell?
 
     def initialize(row : Int32, column : Int32)
       @row = row
@@ -35,10 +35,10 @@ module Mazes
 
     def neighbors
       neighbors = [] of Cell
-      neighbors << north if north
-      neighbors << south if south
-      neighbors << east if east
-      neighbors << west if west
+      neighbors << north.as(Cell) if north
+      neighbors << south.as(Cell) if south
+      neighbors << east.as(Cell) if east
+      neighbors << west.as(Cell) if west
       neighbors
     end
   end

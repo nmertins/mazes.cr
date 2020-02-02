@@ -28,4 +28,9 @@ describe "Mazes::Cell" do
     neighbor.links.size.should eq(0)
     cell.linked?(neighbor).should be_false
   end
+
+  it "can give a list of neighbors" do
+    cell = Mazes::Cell.new(0, 0)
+    cell.neighbors.size.should eq(0)
+  end
 end
