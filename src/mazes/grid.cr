@@ -69,8 +69,6 @@ module Mazes
         bottom = "+"
 
         row.each do |cell|
-          cell = Cell.new(-1, -1) unless cell
-
           body = "   "
           east_boundary = (cell.linked?(cell.east) ? " " : "|")
           top += body + east_boundary
