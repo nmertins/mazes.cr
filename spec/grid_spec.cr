@@ -26,4 +26,12 @@ describe "Maze::Grid" do
       end
     end
   end
+
+  it "returns nil for out-of-bounds indexes" do
+    grid = Mazes::Grid.new(5, 5)
+
+    expect_raises(NilAssertionError) do
+      grid[0, 5].not_nil!
+    end
+  end
 end
