@@ -61,10 +61,10 @@ module Mazes
       @rows * @columns
     end
 
-    def to_s
-      output = "+" + "---+" * @columns + "\n"
+    def to_s(io)
+      io << "+" + "---+" * @columns + "\n"
 
-      each row do |row|
+      each_row do |row|
         top = "|"
         bottom = "+"
 
@@ -73,18 +73,16 @@ module Mazes
 
           body = "   "
           east_boundary = (cell.linked?(cell.east) ? " " : "|")
-          top  << body << east_boundary
+          top += body + east_boundary
 
           south_boundary = (cell.linked?(cell.south) ? "   " : "---")
           corner = "+"
-          bottom << south_boundary << corner
+          bottom += south_boundary + corner
         end
 
-        output << top << "\n"
-        output << bottom << "\n"
+        io << top + "\n"
+        io << bottom + "\n"
       end
-
-      output
     end
   end
 end
