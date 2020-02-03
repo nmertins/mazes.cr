@@ -6,9 +6,10 @@ module Mazes
         neighbors << cell.north.as(Cell) if cell.north
         neighbors << cell.east.as(Cell) if cell.east
 
-        neighbor = neighbors.sample(1)
-
-        cell.link(neighbor) if neighbor
+        if neighbors.size > 0
+          neighbor = neighbors.sample(1)[0]
+          cell.link(neighbor)
+        end
       end
 
       grid
