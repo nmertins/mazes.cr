@@ -13,7 +13,7 @@ module Mazes
       @links = {} of Cell => Bool
     end
 
-    def link(cell, bidirectional = true)
+    def link(cell : Cell, bidirectional = true)
       @links[cell] = true
       cell.link(self, false) if bidirectional
       self
