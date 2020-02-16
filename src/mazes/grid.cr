@@ -86,13 +86,13 @@ module Mazes
       end
     end
 
-    def to_png(cell_size = 10)
+    def to_png(cell_size = 10, background_hex = "#ffffff", wall_hex = "#000000", filename = "maze.png")
       img_width = cell_size * @columns
       img_height = cell_size * @rows
 
-      background = RGBA.from_hex("#ffffff")
-      wall = RGBA.from_hex("#000000")
-      
+      background = RGBA.from_hex(background_hex)
+      wall = RGBA.from_hex(wall_hex)
+
       img = Canvas.new(img_width + 1, img_height + 1, background)
 
       (0..img_width).each do |x|
@@ -122,7 +122,7 @@ module Mazes
         end
       end
 
-      StumpyPNG.write(img, "maze.png")
+      StumpyPNG.write(img, filename)
     end
   end
 end
