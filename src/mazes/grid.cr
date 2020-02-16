@@ -1,4 +1,7 @@
 require "./cell"
+require "stumpy_png"
+
+include StumpyPNG
 
 module Mazes
   class Grid
@@ -81,6 +84,45 @@ module Mazes
         io << top + "\n"
         io << bottom + "\n"
       end
+    end
+
+    def to_png(cell_size = 10)
+      img_width = cell_size * @columns
+      img_height = cell_size * @rows
+
+      background = RGBA.from_hex("#ffffff")
+      wall = RGBA.from_hex("#000000")
+      
+      img = Canvas.new(img_width + 1, img_height + 1, background)
+
+      (0..img_width).each do |x|
+        img[x, 0] = wall
+      end
+
+      (0..img_height).each do |y|
+        img[0, y] = wall
+      end
+
+      each_cell do |cell|
+        x1 = cell.column * cell_size
+        y1 = cell.row * cell_size
+        x2 = x1 + cell_size
+        y2 = y1 + cell_size
+
+        unless cell.linked?(cell.east)
+          (y1..y2).each do |y|
+            img[x2, y] = wall
+          end
+        end
+
+        unless cell.linked?(cell.south)
+          (x1..x2).each do |x|
+            img[x, y2] = wall
+          end
+        end
+      end
+
+      StumpyPNG.write(img, "maze.png")
     end
   end
 end
