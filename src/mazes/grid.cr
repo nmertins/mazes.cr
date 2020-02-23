@@ -65,19 +65,19 @@ module Mazes
     end
 
     def to_s(io)
-      io << "+" + "---+" * @columns + "\n"
+      io << "\u253c" + "\u{2500 2500 2500 253c}" * @columns + "\n"
 
       each_row do |row|
-        top = "|"
-        bottom = "+"
+        top = "\u2502"
+        bottom = "\u253c"
 
         row.each do |cell|
           body = "   "
-          east_boundary = (cell.linked?(cell.east) ? " " : "|")
+          east_boundary = (cell.linked?(cell.east) ? " " : "\u2502")
           top += body + east_boundary
 
-          south_boundary = (cell.linked?(cell.south) ? "   " : "---")
-          corner = "+"
+          south_boundary = (cell.linked?(cell.south) ? "   " : "\u{2500 2500 2500}")
+          corner = "\u253c"
           bottom += south_boundary + corner
         end
 
