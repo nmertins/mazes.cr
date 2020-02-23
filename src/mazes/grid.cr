@@ -65,19 +65,35 @@ module Mazes
     end
 
     def to_s(io)
-      io << "\u253c" + "\u{2500 2500 2500 253c}" * @columns + "\n"
+      io << "\u250c" + "\u{2500 2500 2500 2500}" * (@columns - 1) + "\u{2500 2500 2500 2510}" + "\n"
 
       each_row do |row|
+        is_last_row = row[0].row == (@rows - 1)
         top = "\u2502"
-        bottom = "\u253c"
+        bottom = is_last_row ? "\u2514" : "\u2502"
 
         row.each do |cell|
+          is_last_cell = cell.column == (@columns - 1)
           body = "   "
           east_boundary = (cell.linked?(cell.east) ? " " : "\u2502")
           top += body + east_boundary
 
           south_boundary = (cell.linked?(cell.south) ? "   " : "\u{2500 2500 2500}")
-          corner = "\u253c"
+
+          unless is_last_row
+            if is_last_cell
+              corner =  "\u2502"
+            else
+              corner = "\u253c"
+            end
+          else
+            if is_last_cell
+              corner = "\u2518"
+            else
+              corner = "\u2500"
+            end
+          end
+
           bottom += south_boundary + corner
         end
 
