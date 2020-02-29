@@ -9,6 +9,7 @@ module Utils
           io << build_vertical_walls(y, grid)
           io << build_horizontal_walls(y, grid) unless y == grid.rows-1
         end
+        io << build_bottom_row(grid)
       end
     end
 
@@ -81,6 +82,18 @@ module Utils
       else
         return " "
       end
+    end
+
+    private def self.build_bottom_row(grid : Mazes::Grid)
+      ret = "\u2514"
+      (0...grid.columns-1).each do |x|
+        cell = grid[x, 0].as(Mazes::Cell)
+        bottom_right_corner = cell.linked?(cell.east) ? "\u2500" : "\u2534"
+        ret += "\u{2500 2500 2500}" + bottom_right_corner
+      end
+      ret += "\u{2500 2500 2500 2518}\n"
+
+      ret
     end
   end
 end
