@@ -1,5 +1,6 @@
 require "./cell"
 require "stumpy_png"
+require "../utils/unicode_builder"
 
 include StumpyPNG
 
@@ -65,41 +66,7 @@ module Mazes
     end
 
     def to_s(io)
-      io << "\u250c" + "\u{2500 2500 2500 2500}" * (@columns - 1) + "\u{2500 2500 2500 2510}" + "\n"
-
-      each_row do |row|
-        is_last_row = row[0].row == (@rows - 1)
-        top = "\u2502"
-        bottom = is_last_row ? "\u2514" : "\u2502"
-
-        row.each do |cell|
-          is_last_cell = cell.column == (@columns - 1)
-          body = "   "
-          east_boundary = (cell.linked?(cell.east) ? " " : "\u2502")
-          top += body + east_boundary
-
-          south_boundary = (cell.linked?(cell.south) ? "   " : "\u{2500 2500 2500}")
-
-          unless is_last_row
-            if is_last_cell
-              corner =  "\u2502"
-            else
-              corner = "\u253c"
-            end
-          else
-            if is_last_cell
-              corner = "\u2518"
-            else
-              corner = "\u2500"
-            end
-          end
-
-          bottom += south_boundary + corner
-        end
-
-        io << top + "\n"
-        io << bottom + "\n"
-      end
+      io << Utils::UnicodeBuilder.to_unicode(self)
     end
 
     def to_png(cell_size = 10, background_hex = "#ffffff", wall_hex = "#000000", filename = "maze.png")
