@@ -1,5 +1,6 @@
 require "./cell"
 require "stumpy_png"
+require "../utils/unicode_builder"
 
 include StumpyPNG
 
@@ -65,25 +66,7 @@ module Mazes
     end
 
     def to_s(io)
-      io << "+" + "---+" * @columns + "\n"
-
-      each_row do |row|
-        top = "|"
-        bottom = "+"
-
-        row.each do |cell|
-          body = "   "
-          east_boundary = (cell.linked?(cell.east) ? " " : "|")
-          top += body + east_boundary
-
-          south_boundary = (cell.linked?(cell.south) ? "   " : "---")
-          corner = "+"
-          bottom += south_boundary + corner
-        end
-
-        io << top + "\n"
-        io << bottom + "\n"
-      end
+      io << Utils::UnicodeBuilder.to_unicode(self)
     end
 
     def to_png(cell_size = 10, background_hex = "#ffffff", wall_hex = "#000000", filename = "maze.png")
