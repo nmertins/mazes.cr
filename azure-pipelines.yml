@@ -14,3 +14,5 @@ steps:
     repository: $(imageName)
     command: build
     Dockerfile: Dockerfile.build
+- script: |
+    docker run --rm mazes.cr-tests
