@@ -8,11 +8,6 @@ variables:
   imageName: 'mazes.cr-tests'
 
 steps:
-- task: Docker@2
-  displayName: Build test image
-  inputs:
-    repository: $(imageName)
-    command: build
-    Dockerfile: Dockerfile.build
 - script: |
-    docker run --rm mazes.cr-tests
+    docker build -f Dockerfile.build -t $(imageName):$BUILD_BUILDID
+    docker run --rm $(imageName):$BUILD_BUILDID
