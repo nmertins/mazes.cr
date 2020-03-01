@@ -9,5 +9,5 @@ variables:
 
 steps:
 - script: |
-    docker build -f Dockerfile.build -t $(imageName):$BUILD_BUILDID
+    docker build -f Dockerfile.build -t $(imageName):$BUILD_BUILDID .
     docker run --rm $(imageName):$BUILD_BUILDID
