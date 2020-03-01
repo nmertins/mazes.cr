@@ -93,7 +93,7 @@ module Utils
     private def self.build_bottom_row(grid : Mazes::Grid)
       ret = "\u2514"
       (0...grid.columns-1).each do |column|
-        cell = grid[0, column].as(Mazes::Cell)
+        cell = grid[grid.rows-1, column].as(Mazes::Cell)
         bottom_right_corner = cell.linked?(cell.east) ? "\u2500" : "\u2534"
         ret += "\u{2500 2500 2500}" + bottom_right_corner
       end
