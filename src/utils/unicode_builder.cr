@@ -77,6 +77,12 @@ module Utils
         return "\u2510"
       when {false, true, true, false}
         return "\u250c"
+      when {true, true, false, false}
+        return "\u2502"
+      when {true, false, true, false}
+        return "\u2514"
+      when {true, false, false, true}
+        return "\u2518"
       when {false, false, false, true}
         return "\u2500"
       when {false, false, true, false}
