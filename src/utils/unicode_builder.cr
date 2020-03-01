@@ -38,10 +38,8 @@ module Utils
     end
 
     private def self.build_horizontal_walls(row : Int32, grid : Mazes::Grid)
-      ret = ""
-
       first_cell = grid[0, row].as(Mazes::Cell)
-      ret += first_cell.linked?(first_cell.south) ? "\u2502" : "\u251c"
+      ret = first_cell.linked?(first_cell.south) ? "\u2502" : "\u251c"
 
       (0...grid.columns-1).each do |x|
         cell = grid[x, row].as(Mazes::Cell)
@@ -79,6 +77,14 @@ module Utils
         return "\u2510"
       when {false, true, true, false}
         return "\u250c"
+      when {false, false, false, true}
+        return "\u2500"
+      when {false, false, true, false}
+        return "\u2500"
+      when {false, true, false, false}
+        return "\u2502"
+      when {true, false, false, false}
+        return "\u2502"
       else
         return " "
       end
