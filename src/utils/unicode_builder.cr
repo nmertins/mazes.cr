@@ -16,7 +16,7 @@ module Utils
     private def self.build_top_row(grid : Mazes::Grid)
       ret = "\u250c"
       (0...grid.columns-1).each do |column|
-        cell = grid[column, 0].as(Mazes::Cell)
+        cell = grid[0, column].as(Mazes::Cell)
         top_right_corner = cell.linked?(cell.east) ? "\u2500" : "\u252c"
         ret += "\u{2500 2500 2500}" + top_right_corner
       end
@@ -28,7 +28,7 @@ module Utils
     private def self.build_vertical_walls(row : Int32, grid : Mazes::Grid)
       ret = "\u2502"
       (0...grid.columns).each do |column|
-        cell = grid[column, row].as(Mazes::Cell)
+        cell = grid[row, column].as(Mazes::Cell)
         right_border = cell.linked?(cell.east) ? " " : "\u2502"
         ret += "   " + right_border
       end
@@ -38,13 +38,13 @@ module Utils
     end
 
     private def self.build_horizontal_walls(row : Int32, grid : Mazes::Grid)
-      first_cell = grid[0, row].as(Mazes::Cell)
+      first_cell = grid[row, 0].as(Mazes::Cell)
       ret = first_cell.linked?(first_cell.south) ? "\u2502" : "\u251c"
 
       (0...grid.columns-1).each do |column|
-        cell = grid[column, row].as(Mazes::Cell)
+        cell = grid[row, column].as(Mazes::Cell)
         horizontal_wall = cell.linked?(cell.south) ? "   " : "\u{2500 2500 2500}"
-        diag_neighbor = grid[column+1, row+1].as(Mazes::Cell)
+        diag_neighbor = grid[row+1, column+1].as(Mazes::Cell)
         north_wall_exists = !cell.linked?(cell.east)
         west_wall_exists = !cell.linked?(cell.south)
         east_wall_exists = !diag_neighbor.linked?(diag_neighbor.north)
@@ -53,7 +53,7 @@ module Utils
         ret += horizontal_wall + cell_junction
       end
 
-      last_cell = grid[grid.columns-1, row].as(Mazes::Cell)
+      last_cell = grid[row, grid.columns-1].as(Mazes::Cell)
       ret += last_cell.linked?(last_cell.south) ? "   " + "\u2502\n" : "\u{2500 2500 2500 2524}\n"
 
       ret
@@ -93,7 +93,7 @@ module Utils
     private def self.build_bottom_row(grid : Mazes::Grid)
       ret = "\u2514"
       (0...grid.columns-1).each do |column|
-        cell = grid[column, 0].as(Mazes::Cell)
+        cell = grid[0, column].as(Mazes::Cell)
         bottom_right_corner = cell.linked?(cell.east) ? "\u2500" : "\u2534"
         ret += "\u{2500 2500 2500}" + bottom_right_corner
       end
