@@ -9,6 +9,10 @@ module Mazes
       @cells[cell]
     end
 
+    def []?(cell)
+      @cells[cell]?
+    end
+
     def []=(cell, distance)
       @cells[cell] = distance
     end
