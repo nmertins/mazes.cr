@@ -1,7 +1,7 @@
 require "../spec_helper"
 
-describe "Distance between 2 cells" do
-  it "is given as a map with distances relative to the root" do
+describe "Distance between cells" do
+  it "is given as a map with values relative to a root cell" do
     grid = Mazes::Grid.new(2,2)
     root = grid[0, 0].as(Mazes::Cell)
     root.link(root.south.as(Mazes::Cell)) if root.south
