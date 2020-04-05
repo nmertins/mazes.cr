@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe "Mazes::Distances" do
   it "should be initalized with a root cell and the distance to its root is 0" do
