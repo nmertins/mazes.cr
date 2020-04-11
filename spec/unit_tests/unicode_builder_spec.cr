@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe "Utils::UnicodeBuilder" do
   it "should draw a box" do

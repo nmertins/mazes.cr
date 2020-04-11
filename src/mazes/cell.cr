@@ -1,3 +1,5 @@
+require "./distances"
+
 module Mazes
   class Cell
     property row
@@ -40,6 +42,27 @@ module Mazes
       neighbors << east.as(Cell) if east
       neighbors << west.as(Cell) if west
       neighbors
+    end
+
+    def distances
+      distances = Distances.new(self)
+      frontier = [ self ]
+
+      while frontier.any?
+        new_frontier = [] of Cell
+
+        frontier.each do |cell|
+          cell.links.each do |linked|
+            next if distances[linked]?
+            distances[linked] = distances[cell] + 1
+            new_frontier << linked
+          end
+        end
+
+        frontier = new_frontier
+      end
+
+      distances
     end
   end
 end

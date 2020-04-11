@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe "Maze::Grid" do
   it "creates 4 unlinked cells" do

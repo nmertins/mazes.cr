@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 describe "Mazes::Cell" do
   it "ought to know where it lives within the grid" do
@@ -17,7 +17,7 @@ describe "Mazes::Cell" do
     cell.links.size.should eq(0)
     neighbor.links.size.should eq(0)
     cell.linked?(neighbor).should be_false
-    
+
     cell.link(neighbor)
     cell.links.size.should eq(1)
     neighbor.links.size.should eq(1)
