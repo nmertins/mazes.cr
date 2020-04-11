@@ -30,7 +30,7 @@ module Utils
       (0...grid.columns).each do |column|
         cell = grid[row, column].as(Mazes::Cell)
         right_border = cell.linked?(cell.east) ? " " : "\u2502"
-        ret += "   " + right_border
+        ret += " #{grid.contents_of(cell)} " + right_border
       end
       ret += "\n"
 
