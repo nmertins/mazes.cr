@@ -65,6 +65,10 @@ module Mazes
       @rows * @columns
     end
 
+    def contents_of(cell)
+      " "
+    end
+
     def to_s(io)
       io << Utils::UnicodeBuilder.to_unicode(self)
     end
