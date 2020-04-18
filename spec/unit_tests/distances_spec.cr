@@ -10,4 +10,21 @@ describe "Mazes::Distances" do
     distances[root].should eq 0
   end
 
+  it "can give the shortest path between two cells, given that the distances have already been calculated" do
+    grid = Mazes::Grid(5, 5)
+
+    # *---*---*---*---*---*
+    # | 0   1   2   3   4 |
+    # *   *---*---*---*   *
+    # |   |             5 |
+    # *   *---*   *---*   *
+    # |   |       | 7   6 |
+    # *   *---*   *   *   *
+    # |   |       | 8 |   |
+    # *---*---*---*   *   *
+    # | c   b   a   9 |   |
+    # *---*---*---*---*---*
+
+    false.should be_true
+  end
 end
