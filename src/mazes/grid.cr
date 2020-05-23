@@ -73,14 +73,17 @@ module Mazes
       io << Utils::UnicodeBuilder.to_unicode(self)
     end
 
-    def to_png(cell_size = 10, background_hex = "#ffffff", wall_hex = "#000000", filename = "maze.png")
+    def background_color_for(cell)
+      RGBA.from_hex("#ffffff")
+    end
+
+    def to_png(cell_size = 10, filename = "maze.png")
       img_width = cell_size * @columns
       img_height = cell_size * @rows
 
-      background = RGBA.from_hex(background_hex)
-      wall = RGBA.from_hex(wall_hex)
+      img = Canvas.new(img_width + 1, img_height + 1)
 
-      img = Canvas.new(img_width + 1, img_height + 1, background)
+      wall = RGBA.from_hex("#000000")
 
       (0..img_width).each do |x|
         img[x, 0] = wall
@@ -95,6 +98,12 @@ module Mazes
         y1 = cell.row * cell_size
         x2 = x1 + cell_size
         y2 = y1 + cell_size
+
+        (x1 + 1..x2).each do |x|
+          (y1 + 1..y2).each do |y|
+            img[x, y] = background_color_for(cell)
+          end
+        end
 
         unless cell.linked?(cell.east)
           (y1..y2).each do |y|
