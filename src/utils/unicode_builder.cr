@@ -30,7 +30,11 @@ module Utils
       (0...grid.columns).each do |column|
         cell = grid[row, column].as(Mazes::Cell)
         right_border = cell.linked?(cell.east) ? " " : "\u2502"
-        ret += " #{grid.contents_of(cell)} " + right_border
+        cell_content_size = grid.contents_of(cell).size
+        ret += " #{grid.contents_of(cell)} " + right_border if cell_content_size == 1
+        ret += " #{grid.contents_of(cell)}" + right_border if cell_content_size == 2
+        ret += "#{grid.contents_of(cell)}" + right_border if cell_content_size == 3
+        ret += " # " + right_border if cell_content_size > 3 # TODO: pop a bottle of champagne if this is ever revisited
       end
       ret += "\n"
 
