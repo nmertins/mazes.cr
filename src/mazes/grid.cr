@@ -36,6 +36,10 @@ module Mazes
     end
 
     def [](row, column)
+      @grid[row][column]
+    end
+
+    def []?(row, column)
       return nil unless 0 <= row < @rows
       return nil unless 0 <= column < @columns
       @grid[row][column]
