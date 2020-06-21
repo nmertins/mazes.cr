@@ -28,10 +28,10 @@ module Mazes
     def configure_cells
       each_cell do |cell|
         row, column = cell.row, cell.column
-        cell.north = self[row - 1, column]
-        cell.south = self[row + 1, column]
-        cell.east = self[row, column + 1]
-        cell.west = self[row, column - 1]
+        cell.north = self[row - 1, column]?
+        cell.south = self[row + 1, column]?
+        cell.east = self[row, column + 1]?
+        cell.west = self[row, column - 1]?
       end
     end
 
