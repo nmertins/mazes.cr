@@ -8,11 +8,12 @@ module Mazes
     property south : Cell?
     property east : Cell?
     property west : Cell?
+    @links : Hash(Cell, Bool)
 
     def initialize(row : Int32, column : Int32)
       @row = row
       @column = column
-      @links = {} of Cell => Bool
+      @links = Hash(Cell, Bool).new
     end
 
     def link(cell : Cell, bidirectional = true)
