@@ -41,6 +41,16 @@ describe "Mazes::Cell" do
     neighbor.west = cell
     # cell.link(neighbor)
 
-    puts cell.to_json
+    cell_json = cell.to_json
+    neighbor_json = neighbor.to_json
+
+    cell_any = JSON.parse(cell_json)
+    neighbor_any = JSON.parse(neighbor_json)
+
+    cell_any["row"].as_i.should eq 0
+    cell_any["column"].as_i.should eq 0
+
+    neighbor_any["row"].as_i.should eq 1
+    neighbor_any["column"].as_i.should eq 0
   end
 end
