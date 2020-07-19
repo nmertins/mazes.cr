@@ -1,4 +1,5 @@
 require "./distances"
+require "json"
 
 module Mazes
   class Cell
@@ -64,6 +65,21 @@ module Mazes
       end
 
       distances
+    end
+
+    def to_json
+      String.build do |str|
+        to_json(str)
+      end
+    end
+
+    def to_json(io : IO)
+      JSON.build(io) do |json|
+        json.object do                  # build Cell object
+          json.field "row", @row
+          json.field "column", @column
+        end
+      end
     end
   end
 end
