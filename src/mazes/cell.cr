@@ -74,10 +74,34 @@ module Mazes
     end
 
     def to_json(io : IO)
+      links_hash = Hash(String, Bool).new
+      links_hash["north"] = false
+      links_hash["south"] = false
+      links_hash["east"] = false
+      links_hash["west"] = false
+
+      if north
+        links_hash["north"] = true if @links[north]?
+      end
+
+      if south
+        links_hash["south"] = true if @links[south]?
+      end
+
+      if east
+        links_hash["east"] = true if @links[east]?
+      end
+
+      if west
+        links_hash["west"] = true if @links[west]?
+      end
+
+
       JSON.build(io) do |json|
         json.object do                  # build Cell object
           json.field "row", @row
           json.field "column", @column
+          json.field "links", links_hash
         end
       end
     end
