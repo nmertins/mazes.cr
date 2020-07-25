@@ -54,4 +54,9 @@ describe "Maze::Grid" do
       grid[0, 5]?.not_nil!
     end
   end
+
+  it "can be serialized to JSON" do
+    grid = Mazes::Grid.new(5, 5)
+    grid_json = grid.to_json
+  end
 end
