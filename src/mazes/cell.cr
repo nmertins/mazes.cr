@@ -80,22 +80,10 @@ module Mazes
       links_hash["east"] = false
       links_hash["west"] = false
 
-      if north
-        links_hash["north"] = true if @links[north]?
-      end
-
-      if south
-        links_hash["south"] = true if @links[south]?
-      end
-
-      if east
-        links_hash["east"] = true if @links[east]?
-      end
-
-      if west
-        links_hash["west"] = true if @links[west]?
-      end
-
+      links_hash["north"] = true if north && @links[north]?
+      links_hash["south"] = true if south && @links[south]?
+      links_hash["east"] = true if east && @links[east]?
+      links_hash["west"] = true if west && @links[west]?
 
       JSON.build(io) do |json|
         json.object do                  # build Cell object
