@@ -135,6 +135,15 @@ module Mazes
         json.object do
           json.field "rows", @rows
           json.field "columns", @columns
+          json.field "cells" do
+            json.array do
+              each_cell do |cell|
+                json.object do
+                  cell.to_json
+                end
+              end
+            end
+          end
         end
       end
     end
