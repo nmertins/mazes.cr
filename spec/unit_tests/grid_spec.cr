@@ -56,7 +56,11 @@ describe "Maze::Grid" do
   end
 
   it "can be serialized to JSON" do
-    grid = Mazes::Grid.new(5, 5)
+    grid = create_2x2_U_grid
     grid_json = grid.to_json
+    grid_any = JSON.parse(grid_json)
+    grid_any["rows"].should eq 2
+    grid_any["columns"].should eq 2
+    grid_any["cells"].size.should eq 4
   end
 end
