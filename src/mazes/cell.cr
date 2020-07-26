@@ -11,9 +11,7 @@ module Mazes
     property west : Cell?
     @links : Hash(Cell, Bool)
 
-    def initialize(row : Int32, column : Int32)
-      @row = row
-      @column = column
+    def initialize(@row : Int32, @column : Int32)
       @links = Hash(Cell, Bool).new
     end
 

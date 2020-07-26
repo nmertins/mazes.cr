@@ -1,6 +1,7 @@
 require "./cell"
-require "stumpy_png"
 require "../utils/unicode_builder"
+require "json"
+require "stumpy_png"
 
 include StumpyPNG
 
@@ -10,9 +11,7 @@ module Mazes
     property columns
     @grid : Array(Array(Cell))
 
-    def initialize(rows : Int32, columns : Int32)
-      @rows = rows
-      @columns = columns
+    def initialize(@rows : Int32, @columns : Int32)
       @grid = prepare_grid
       configure_cells
     end
@@ -69,11 +68,11 @@ module Mazes
       @rows * @columns
     end
 
-    def contents_of(cell)
+    def contents_of(cell : Cell)
       " "
     end
 
-    def to_s(io)
+    def to_s(io : IO)
       io << Utils::UnicodeBuilder.to_unicode(self)
     end
 
@@ -123,6 +122,21 @@ module Mazes
       end
 
       StumpyPNG.write(img, filename)
+    end
+
+    def to_json
+      String.build do |str|
+        to_json(str)
+      end
+    end
+
+    def to_json(io : IO)
+      JSON.build(io) do |json|
+        json.object do
+          json.field "rows", @rows
+          json.field "columns", @columns
+        end
+      end
     end
   end
 end
