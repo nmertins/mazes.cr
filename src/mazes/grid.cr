@@ -138,14 +138,17 @@ module Mazes
           json.field "cells" do
             json.array do
               each_cell do |cell|
-                json.object do
-                  cell.to_json
-                end
+                cell.to_json(io)
+                io << ',' unless is_last(cell)
               end
             end
           end
         end
       end
+    end
+
+    private def is_last(cell)
+      cell.row == @rows-1 && cell.column == @columns-1
     end
   end
 end

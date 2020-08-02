@@ -62,5 +62,33 @@ describe "Maze::Grid" do
     grid_any["rows"].should eq 2
     grid_any["columns"].should eq 2
     grid_any["cells"].size.should eq 4
+
+    grid_any["cells"][0]["row"].should eq 0
+    grid_any["cells"][0]["column"].should eq 0
+    grid_any["cells"][0]["links"]["north"].should be_false
+    grid_any["cells"][0]["links"]["south"].should be_true
+    grid_any["cells"][0]["links"]["east"].should be_false
+    grid_any["cells"][0]["links"]["west"].should be_false
+
+    grid_any["cells"][1]["row"].should eq 0
+    grid_any["cells"][1]["column"].should eq 1
+    grid_any["cells"][1]["links"]["north"].should be_false
+    grid_any["cells"][1]["links"]["south"].should be_true
+    grid_any["cells"][1]["links"]["east"].should be_false
+    grid_any["cells"][1]["links"]["west"].should be_false
+
+    grid_any["cells"][2]["row"].should eq 1
+    grid_any["cells"][2]["column"].should eq 0
+    grid_any["cells"][2]["links"]["north"].should be_true
+    grid_any["cells"][2]["links"]["south"].should be_false
+    grid_any["cells"][2]["links"]["east"].should be_true
+    grid_any["cells"][2]["links"]["west"].should be_false
+
+    grid_any["cells"][3]["row"].should eq 1
+    grid_any["cells"][3]["column"].should eq 1
+    grid_any["cells"][3]["links"]["north"].should be_true
+    grid_any["cells"][3]["links"]["south"].should be_false
+    grid_any["cells"][3]["links"]["east"].should be_false
+    grid_any["cells"][3]["links"]["west"].should be_true
   end
 end
