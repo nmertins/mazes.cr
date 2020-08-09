@@ -65,13 +65,13 @@ module Mazes
       distances
     end
 
-    def to_json
+    def to_json : String
       String.build do |str|
         to_json(str)
       end
     end
 
-    def to_json(io : IO)
+    def to_json(io : IO) : Nil
       links_hash = Hash(String, Bool).new
       links_hash["north"] = false
       links_hash["south"] = false
@@ -90,6 +90,13 @@ module Mazes
           json.field "links", links_hash
         end
       end
+    end
+
+    def self.from_json(input : String | IO) : Cell
+      json = JSON.parse(input)
+      row = json["row"].as_i()
+      column = json["column"].as_i()
+      self.new(row, column)
     end
   end
 end
