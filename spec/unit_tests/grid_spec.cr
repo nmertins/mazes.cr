@@ -95,11 +95,23 @@ describe "Maze::Grid" do
   it "can be deserialized from JSON" do
     grid_json = File.open("spec/resources/2x2_U_grid.json")
     grid = Mazes::Grid.from_json(grid_json)
+    tl = grid[0, 0].as(Mazes::Cell)
+    tr = grid[0, 1].as(Mazes::Cell)
+    bl = grid[1, 0].as(Mazes::Cell)
+    br = grid[1, 1].as(Mazes::Cell)
 
     grid.size.should eq 4
-    grid[0, 0].as(Mazes::Cell).links.size.should eq 1
-    grid[0, 1].as(Mazes::Cell).links.size.should eq 1
-    grid[1, 0].as(Mazes::Cell).links.size.should eq 2
-    grid[1, 1].as(Mazes::Cell).links.size.should eq 2
+    tl.links.size.should eq 1
+    tl.linked?(tr).should be_false
+    tl.linked?(bl).should be_true
+    tr.links.size.should eq 1
+    tr.linked?(tl).should be_false
+    tr.linked?(br).should be_true
+    bl.links.size.should eq 2
+    bl.linked?(tl).should be_true
+    bl.linked?(br).should be_true
+    br.links.size.should eq 2
+    br.linked?(tr).should be_true
+    br.linked?(bl).should be_true
   end
 end
