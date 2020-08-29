@@ -156,7 +156,35 @@ module Mazes
       rows = json["rows"].as_i
       columns = json["columns"].as_i
 
-      self.new(rows, columns)
+      grid = self.new(rows, columns)
+
+      json["cells"].as_a.each do |cell_json|
+        row = cell_json["row"].as_i
+        column = cell_json["column"].as_i
+        cell = grid[row, column].as(Cell)
+
+        if cell_json["links"]["north"].as_bool
+          north = grid[row-1, column].as(Cell)
+          cell.link(north)
+        end
+
+        if cell_json["links"]["south"].as_bool
+          south = grid[row+1, column].as(Cell)
+          cell.link(south)
+        end
+
+        if cell_json["links"]["east"].as_bool
+          east = grid[row, column+1].as(Cell)
+          cell.link(east)
+        end
+
+        if cell_json["links"]["west"].as_bool
+          west = grid[row, column-1].as(Cell)
+          cell.link(west)
+        end
+      end
+
+      grid
     end
   end
 end

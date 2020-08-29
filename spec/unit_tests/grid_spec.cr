@@ -97,5 +97,9 @@ describe "Maze::Grid" do
     grid = Mazes::Grid.from_json(grid_json)
 
     grid.size.should eq 4
+    grid[0, 0].as(Mazes::Cell).links.size.should eq 1
+    grid[0, 1].as(Mazes::Cell).links.size.should eq 1
+    grid[1, 0].as(Mazes::Cell).links.size.should eq 2
+    grid[1, 1].as(Mazes::Cell).links.size.should eq 2
   end
 end
