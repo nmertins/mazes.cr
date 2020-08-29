@@ -61,12 +61,4 @@ describe "Mazes::Cell" do
     neighbor_any["links"]["east"].should eq false
     neighbor_any["links"]["west"].should eq true
   end
-
-  it "can be deserialized from JSON" do
-    cell_json = %({"row": 0, "column": 0})
-    cell = Mazes::Cell.from_json(cell_json)
-
-    cell.row.should eq 0
-    cell.column.should eq 0
-  end
 end
