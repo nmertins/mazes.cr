@@ -150,5 +150,13 @@ module Mazes
     private def is_last(cell) : Bool
       cell.row == @rows-1 && cell.column == @columns-1
     end
+
+    def self.from_json(input : String | IO) : Grid
+      json = JSON.parse(input)
+      rows = json["rows"].as_i
+      columns = json["columns"].as_i
+
+      self.new(rows, columns)
+    end
   end
 end

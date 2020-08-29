@@ -91,4 +91,11 @@ describe "Maze::Grid" do
     grid_any["cells"][3]["links"]["east"].should be_false
     grid_any["cells"][3]["links"]["west"].should be_true
   end
+
+  it "can be deserialized from JSON" do
+    grid_json = create_2x2_U_grid_json
+    grid = Mazes::Grid.from_json(grid_json)
+
+    grid.size.should eq 4
+  end
 end
