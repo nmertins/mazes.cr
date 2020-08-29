@@ -1,0 +1,46 @@
+{
+  "rows": 2,
+  "columns": 2,
+  "cells": [
+    {
+      "row": 0,
+      "column": 0,
+      "links": {
+        "north": false,
+        "south": true,
+        "east": false,
+        "west": false
+      }
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "links": {
+        "north": false,
+        "south": true,
+        "east": false,
+        "west": false
+      }
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "links": {
+        "north": true,
+        "south": false,
+        "east": true,
+        "west": false
+      }
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "links": {
+        "north": true,
+        "south": false,
+        "east": false,
+        "west": true
+      }
+    }
+  ]
+}

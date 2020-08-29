@@ -1,4 +1,5 @@
 require "./distances"
+require "json"
 
 module Mazes
   class Cell
@@ -8,11 +9,10 @@ module Mazes
     property south : Cell?
     property east : Cell?
     property west : Cell?
+    @links : Hash(Cell, Bool)
 
-    def initialize(row : Int32, column : Int32)
-      @row = row
-      @column = column
-      @links = {} of Cell => Bool
+    def initialize(@row : Int32, @column : Int32)
+      @links = Hash(Cell, Bool).new
     end
 
     def link(cell : Cell, bidirectional = true)
@@ -63,6 +63,33 @@ module Mazes
       end
 
       distances
+    end
+
+    def to_json : String
+      String.build do |str|
+        to_json(str)
+      end
+    end
+
+    def to_json(io : IO) : Nil
+      links_hash = Hash(String, Bool).new
+      links_hash["north"] = false
+      links_hash["south"] = false
+      links_hash["east"] = false
+      links_hash["west"] = false
+
+      links_hash["north"] = true if north && @links[north]?
+      links_hash["south"] = true if south && @links[south]?
+      links_hash["east"] = true if east && @links[east]?
+      links_hash["west"] = true if west && @links[west]?
+
+      JSON.build(io) do |json|
+        json.object do                  # build Cell object
+          json.field "row", @row
+          json.field "column", @column
+          json.field "links", links_hash
+        end
+      end
     end
   end
 end

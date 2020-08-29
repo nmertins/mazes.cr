@@ -33,4 +33,32 @@ describe "Mazes::Cell" do
     cell = Mazes::Cell.new(0, 0)
     cell.neighbors.size.should eq(0)
   end
+
+  it "can be serialized to JSON" do
+    cell = Mazes::Cell.new(0, 0)
+    neighbor = Mazes::Cell.new(1, 0)
+    cell.east = neighbor
+    neighbor.west = cell
+    cell.link(neighbor)
+
+    cell_json = cell.to_json
+    neighbor_json = neighbor.to_json
+
+    cell_any = JSON.parse(cell_json)
+    neighbor_any = JSON.parse(neighbor_json)
+
+    cell_any["row"].as_i.should eq 0
+    cell_any["column"].as_i.should eq 0
+    cell_any["links"]["north"].should eq false
+    cell_any["links"]["south"].should eq false
+    cell_any["links"]["east"].should eq true
+    cell_any["links"]["west"].should eq false
+
+    neighbor_any["row"].as_i.should eq 1
+    neighbor_any["column"].as_i.should eq 0
+    neighbor_any["links"]["north"].should eq false
+    neighbor_any["links"]["south"].should eq false
+    neighbor_any["links"]["east"].should eq false
+    neighbor_any["links"]["west"].should eq true
+  end
 end

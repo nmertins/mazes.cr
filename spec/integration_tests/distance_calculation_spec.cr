@@ -2,13 +2,8 @@ require "../spec_helper"
 
 describe "Distance between cells" do
   it "is given as a map with values relative to a root cell" do
-    grid = Mazes::Grid.new(2,2)
+    grid = create_2x2_U_grid
     root = grid[0, 0].as(Mazes::Cell)
-    root.link(root.south.as(Mazes::Cell)) if root.south
-
-    bottom_right = grid[1, 1].as(Mazes::Cell)
-    bottom_right.link(bottom_right.west.as(Mazes::Cell)) if bottom_right.west
-    bottom_right.link(bottom_right.north.as(Mazes::Cell)) if bottom_right.north
 
     # Our grid should now look like:
     #

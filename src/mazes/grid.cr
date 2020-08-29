@@ -1,6 +1,7 @@
 require "./cell"
-require "stumpy_png"
 require "../utils/unicode_builder"
+require "json"
+require "stumpy_png"
 
 include StumpyPNG
 
@@ -10,9 +11,7 @@ module Mazes
     property columns
     @grid : Array(Array(Cell))
 
-    def initialize(rows : Int32, columns : Int32)
-      @rows = rows
-      @columns = columns
+    def initialize(@rows : Int32, @columns : Int32)
       @grid = prepare_grid
       configure_cells
     end
@@ -69,11 +68,11 @@ module Mazes
       @rows * @columns
     end
 
-    def contents_of(cell)
+    def contents_of(cell : Cell) : String
       " "
     end
 
-    def to_s(io)
+    def to_s(io : IO)
       io << Utils::UnicodeBuilder.to_unicode(self)
     end
 
@@ -123,6 +122,69 @@ module Mazes
       end
 
       StumpyPNG.write(img, filename)
+    end
+
+    def to_json : String
+      String.build do |str|
+        to_json(str)
+      end
+    end
+
+    def to_json(io : IO) : Nil
+      JSON.build(io) do |json|
+        json.object do
+          json.field "rows", @rows
+          json.field "columns", @columns
+          json.field "cells" do
+            json.array do
+              each_cell do |cell|
+                cell.to_json(io)
+                io << ',' unless is_last(cell)
+              end
+            end
+          end
+        end
+      end
+    end
+
+    private def is_last(cell) : Bool
+      cell.row == @rows-1 && cell.column == @columns-1
+    end
+
+    def self.from_json(input : String | IO) : Grid
+      json = JSON.parse(input)
+      rows = json["rows"].as_i
+      columns = json["columns"].as_i
+
+      grid = self.new(rows, columns)
+
+      json["cells"].as_a.each do |cell_json|
+        row = cell_json["row"].as_i
+        column = cell_json["column"].as_i
+        cell = grid[row, column].as(Cell)
+
+        if cell_json["links"]["north"].as_bool
+          north = grid[row-1, column].as(Cell)
+          cell.link(north)
+        end
+
+        if cell_json["links"]["south"].as_bool
+          south = grid[row+1, column].as(Cell)
+          cell.link(south)
+        end
+
+        if cell_json["links"]["east"].as_bool
+          east = grid[row, column+1].as(Cell)
+          cell.link(east)
+        end
+
+        if cell_json["links"]["west"].as_bool
+          west = grid[row, column-1].as(Cell)
+          cell.link(west)
+        end
+      end
+
+      grid
     end
   end
 end

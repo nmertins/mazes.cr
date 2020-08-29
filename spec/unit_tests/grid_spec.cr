@@ -54,4 +54,64 @@ describe "Maze::Grid" do
       grid[0, 5]?.not_nil!
     end
   end
+
+  it "can be serialized to JSON" do
+    grid = create_2x2_U_grid
+    grid_json = grid.to_json
+    grid_any = JSON.parse(grid_json)
+    grid_any["rows"].should eq 2
+    grid_any["columns"].should eq 2
+    grid_any["cells"].size.should eq 4
+
+    grid_any["cells"][0]["row"].should eq 0
+    grid_any["cells"][0]["column"].should eq 0
+    grid_any["cells"][0]["links"]["north"].should be_false
+    grid_any["cells"][0]["links"]["south"].should be_true
+    grid_any["cells"][0]["links"]["east"].should be_false
+    grid_any["cells"][0]["links"]["west"].should be_false
+
+    grid_any["cells"][1]["row"].should eq 0
+    grid_any["cells"][1]["column"].should eq 1
+    grid_any["cells"][1]["links"]["north"].should be_false
+    grid_any["cells"][1]["links"]["south"].should be_true
+    grid_any["cells"][1]["links"]["east"].should be_false
+    grid_any["cells"][1]["links"]["west"].should be_false
+
+    grid_any["cells"][2]["row"].should eq 1
+    grid_any["cells"][2]["column"].should eq 0
+    grid_any["cells"][2]["links"]["north"].should be_true
+    grid_any["cells"][2]["links"]["south"].should be_false
+    grid_any["cells"][2]["links"]["east"].should be_true
+    grid_any["cells"][2]["links"]["west"].should be_false
+
+    grid_any["cells"][3]["row"].should eq 1
+    grid_any["cells"][3]["column"].should eq 1
+    grid_any["cells"][3]["links"]["north"].should be_true
+    grid_any["cells"][3]["links"]["south"].should be_false
+    grid_any["cells"][3]["links"]["east"].should be_false
+    grid_any["cells"][3]["links"]["west"].should be_true
+  end
+
+  it "can be deserialized from JSON" do
+    grid_json = File.open("spec/resources/2x2_U_grid.json")
+    grid = Mazes::Grid.from_json(grid_json)
+    tl = grid[0, 0].as(Mazes::Cell)
+    tr = grid[0, 1].as(Mazes::Cell)
+    bl = grid[1, 0].as(Mazes::Cell)
+    br = grid[1, 1].as(Mazes::Cell)
+
+    grid.size.should eq 4
+    tl.links.size.should eq 1
+    tl.linked?(tr).should be_false
+    tl.linked?(bl).should be_true
+    tr.links.size.should eq 1
+    tr.linked?(tl).should be_false
+    tr.linked?(br).should be_true
+    bl.links.size.should eq 2
+    bl.linked?(tl).should be_true
+    bl.linked?(br).should be_true
+    br.links.size.should eq 2
+    br.linked?(tr).should be_true
+    br.linked?(bl).should be_true
+  end
 end
