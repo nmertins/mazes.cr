@@ -31,7 +31,7 @@ def create_2x2_U_grid_json : String
         "column": 0,
         "links": {
           "north": false,
-          "sourth": false,
+          "south": true,
           "east": false,
           "west": false
         }
@@ -41,7 +41,7 @@ def create_2x2_U_grid_json : String
         "column": 1,
         "links": {
           "north": false,
-          "sourth": false,
+          "south": true,
           "east": false,
           "west": false
         }
@@ -50,9 +50,9 @@ def create_2x2_U_grid_json : String
         "row": 1,
         "column": 0,
         "links": {
-          "north": false,
-          "sourth": false,
-          "east": false,
+          "north": true,
+          "south": false,
+          "east": true,
           "west": false
         }
       },
@@ -60,10 +60,10 @@ def create_2x2_U_grid_json : String
         "row": 1,
         "column": 1,
         "links": {
-          "north": false,
-          "sourth": false,
+          "north": true,
+          "south": false,
           "east": false,
-          "west": false
+          "west": true
         }
       }
     ]
