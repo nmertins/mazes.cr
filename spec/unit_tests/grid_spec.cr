@@ -93,7 +93,7 @@ describe "Maze::Grid" do
   end
 
   it "can be deserialized from JSON" do
-    grid_json = create_2x2_U_grid_json
+    grid_json = File.open("spec/resources/2x2_U_grid.json")
     grid = Mazes::Grid.from_json(grid_json)
 
     grid.size.should eq 4
