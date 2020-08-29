@@ -68,7 +68,7 @@ module Mazes
       @rows * @columns
     end
 
-    def contents_of(cell : Cell)
+    def contents_of(cell : Cell) : String
       " "
     end
 
@@ -124,13 +124,13 @@ module Mazes
       StumpyPNG.write(img, filename)
     end
 
-    def to_json
+    def to_json : String
       String.build do |str|
         to_json(str)
       end
     end
 
-    def to_json(io : IO)
+    def to_json(io : IO) : Nil
       JSON.build(io) do |json|
         json.object do
           json.field "rows", @rows
@@ -147,7 +147,7 @@ module Mazes
       end
     end
 
-    private def is_last(cell)
+    private def is_last(cell) : Bool
       cell.row == @rows-1 && cell.column == @columns-1
     end
   end
