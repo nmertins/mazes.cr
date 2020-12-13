@@ -12,7 +12,7 @@ module Mazes
 
     def distances=(distances)
       @distances = distances
-      farthest, @maximum = distances.max
+      _, @maximum = distances.max
     end
 
     def background_color_for(cell)
