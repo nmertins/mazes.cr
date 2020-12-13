@@ -1,6 +1,6 @@
 module Mazes
   class AldousBroder
-    def solf.on(grid : Mazes::Grid)
+    def self.on(grid : Mazes::Grid)
       cell = grid.random_cell
       unvisited = grid.size - 1
 
