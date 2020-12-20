@@ -92,6 +92,14 @@ module Mazes
       end
     end
 
+    def to_s(io : IO)
+      io << "Cell@{row=" + @row.to_s + ", column=" + @column.to_s + "}"
+    end
+
+    def inspect(io : IO) : Nil
+      to_s io
+    end
+
     def ==(other : Cell)
       @row == other.row && @column == other.column
     end
