@@ -91,5 +91,13 @@ module Mazes
         end
       end
     end
+
+    def ==(other : Cell)
+      @row == other.row && @column == other.column
+    end
+
+    def =~(other : Cell)
+      self == other
+    end
   end
 end

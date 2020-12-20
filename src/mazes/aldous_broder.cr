@@ -9,7 +9,7 @@ module Mazes
 
         if neighbor.links.empty?
           cell.link(neighbor)
-          unvisited = unvisited - 1
+          unvisited -= 1
         end
 
         cell = neighbor
