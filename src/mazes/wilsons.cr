@@ -26,13 +26,11 @@ module Mazes
           current = neighbor
         end
 
-        puts path
         # link path
         (1...path.size).each do |i|
           path[i].link(path[i - 1])
+          unvisited.delete(path[i - 1])
         end
-
-        unvisited.delete(path)
       end
     end
   end
